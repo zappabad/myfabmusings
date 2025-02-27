@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deck Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .deck-info {
+            margin-bottom: 20px;
+        }
+        button {
+            margin: 5px;
+            padding: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        .blue {
+            color: blue;
+            cursor: pointer;
+        }
+        .red {
+            color: red;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Deck Manager</h1>
+        <div class="deck-info">
+            <p>Deck Count: <span id="deck-count">60</span></p>
+            <p>Soul Shackles: <span id="soul-shackles">0</span></p>
+        </div>
+        <div class="actions">
+            <button onclick="drawCard()">Draw Card</button>
+            <button onclick="banishCards()">Banish Cards</button>
+            <button onclick="endTurn(true)">End Turn (Create Shackle)</button>
+            <button onclick="endTurn(false)">End Turn (No Shackle)</button>
+            <button onclick="shuffleDeck()">Shuffle Deck</button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Deck</th>
+                    <th>Banished</th>
+                    <th>Hand</th>
+                    <th>Arsenal</th>
+                </tr>
+            </thead>
+            <tbody id="deck-status">
+                <!-- Deck status will be rendered here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function updateDeckStatus() {
+            fetch('/chane/deck_status')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('deck-count').textContent = data.deck_count;
+                document.getElementById('soul-shackles').textContent = data.soul_shackles;
+                const deckStatus = document.getElementById('deck-status');
+                let deckHtml = '';
+                data.deck.forEach(card => {
+                    let className = '';
+                    if (data.drawn_cards.includes(card)) {
+                        className = 'blue';
+                    } else if (data.banished_cards.includes(card)) {
+                        className = 'red';
+                    }
+                    deckHtml += `<span class="${className}" onclick="pluckCard(${card})">${card}</span> `;
+                });
+
+                deckStatus.innerHTML = `
+                    <tr>
+                        <td>${deckHtml}</td>
+                        <td>${data.banished.join(', ')}</td>
+                        <td>${data.hand.map(card => `
+                            <span onclick="playCard(${card})">${card}</span> 
+                            <span onclick="pitchCard(${card})">(Pitch)</span> 
+                            <span onclick="wasteCard(${card})">(Waste)</span>`).join('<br>')}</td>
+                        <td>${data.arsenal.join(', ')}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        function drawCard() {
+            fetch('/chane/draw_card', { method: 'POST' })
+            .then(() => updateDeckStatus());
+        }
+
+        function pluckCard(card_id) {
+            fetch('/chane/pluck_card', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ card_id: card_id })
+            })
+            .then(() => updateDeckStatus());
+        }
+
+        function banishCards() {
+            fetch('/chane/banish_card', { method: 'POST' })
+            .then(() => updateDeckStatus());
+        }
+
+        function endTurn(createShackle) {
+            fetch('/chane/end_turn', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ create_shackle: createShackle })
+            })
+            .then(() => updateDeckStatus());
+        }
+
+        function shuffleDeck() {
+            fetch('/chane/shuffle_deck', { method: 'POST' })
+            .then(() => updateDeckStatus());
+        }
+
+        function wasteCard(card_id) {
+            fetch('/chane/waste_card', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ card_id: card_id })
+            })
+            .then(() => updateDeckStatus());
+        }
+
+        function pitchCard(card_id) {
+            fetch('/chane/pitch_card', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ card_id: card_id })
+            })
+            .then(() => updateDeckStatus());
+        }
+
+        function playCard(card_id) {
+            fetch('/chane/play_card', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ card_id: card_id })
+            })
+            .then(() => updateDeckStatus());
+        }
+
+        document.addEventListener('DOMContentLoaded', () => updateDeckStatus());
+    </script>
+</body>
+</html>

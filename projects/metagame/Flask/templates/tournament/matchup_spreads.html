@@ -1,0 +1,30 @@
+<h2>Matchup Spreads</h2>
+<form action="/process_matchup_spreads" method="post">
+    <table>
+        <thead>
+            <tr>
+                <th> </th>
+                {% for name in deck_names %}
+                    <th>{{ name }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for name in deck_names %}
+                <tr>
+                    <th>{{ name }}</th>
+                    {% for opponent in deck_names %}
+                        <td>
+                            {% if name == opponent %}
+                                0.5
+                            {% else %}
+                                <input type="number" name="spread_{{name}}_{{opponent}}" min="0" max="1" step="any" required>
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <input type="submit" value="Submit Matchup Spreads">
+</form>

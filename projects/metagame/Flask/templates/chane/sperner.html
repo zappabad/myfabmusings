@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sperner's Lemma Triangle Mesh</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+            margin-top: 20px;
+        }
+        #controls {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sperner's Lemma Triangle Mesh</h1>
+
+    <div id="controls">
+        <label for="price">Total Price: </label>
+        <input type="number" id="price" value="100" min="1">
+        <button onclick="resetMesh()">Reset Mesh</button>
+    </div>
+
+    <canvas id="meshCanvas" width="800" height="800"></canvas>
+
+    <script>
+        const canvas = document.getElementById('meshCanvas');
+        const ctx = canvas.getContext('2d');
+        const rows = 20;
+        const cols = 20;
+        const vertexColors = [];
+        const triangleSize = canvas.width / cols;
+
+        function drawMesh() {
+            for (let i = 0; i < rows; i++) {
+                for (let j = 0; j < cols; j++) {
+                    drawTriangle(i, j);
+                }
+            }
+        }
+
+        function drawTriangle(row, col) {
+            const x0 = col * triangleSize;
+            const y0 = row * triangleSize;
+            const x1 = x0 + triangleSize;
+            const y1 = y0;
+            const x2 = x0 + triangleSize / 2;
+            const y2 = y0 + triangleSize;
+
+            ctx.beginPath();
+            ctx.moveTo(x0, y0);
+            ctx.lineTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.closePath();
+            ctx.stroke();
+
+            vertexColors.push({x: x0, y: y0, color: 'white'});
+            vertexColors.push({x: x1, y: y1, color: 'white'});
+            vertexColors.push({x: x2, y: y2, color: 'white'});
+        }
+
+        function colorVertex(x, y, color) {
+            ctx.fillStyle = color;
+            ctx.fillRect(x - 5, y - 5, 10, 10);
+
+            const vertex = vertexColors.find(v => v.x === x && v.y === y);
+            if (vertex) vertex.color = color;
+        }
+
+        function handleCanvasClick(event) {
+            const rect = canvas.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
+            let closestVertex = null;
+            let closestDistance = Infinity;
+
+            vertexColors.forEach(vertex => {
+                const distance = Math.hypot(vertex.x - x, vertex.y - y);
+                if (distance < closestDistance) {
+                    closestVertex = vertex;
+                    closestDistance = distance;
+                }
+            });
+
+            if (closestVertex) {
+                const color = prompt('Enter color (e.g., red, green, blue):');
+                if (color) {
+                    colorVertex(closestVertex.x, closestVertex.y, color);
+                }
+            }
+        }
+
+        function resetMesh() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            vertexColors.length = 0;
+            drawMesh();
+        }
+
+        canvas.addEventListener('click', handleCanvasClick);
+
+        resetMesh();
+    </script>
+</body>
+</html>

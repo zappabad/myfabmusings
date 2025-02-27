@@ -1,0 +1,104 @@
+{
+    "simulations": {
+        "num_simulations": 10000
+    },
+    "tournament": {
+        "num_players": 128,
+        "rounds": [
+            "constructed",
+            "constructed",
+            "constructed",
+            "constructed",
+            "draft",
+            "draft",
+            "constructed",
+            "constructed"
+        ]
+    },
+    "decks": {
+        "Dromai": {
+            "representation": 15,
+            "avg_skill_level": 0,
+            "spread": {
+                "Dromai": 0.5,
+                "Kayo": 0.5,
+                "Bravo": 0.3,
+                "Dash": 0.6,
+                "Kano": 0.4,
+                "Fai": 0.4,
+                "Other": 0.6
+            }
+        },
+        "Kayo": {
+            "representation": 20,
+            "avg_skill_level": -0.1,
+            "spread": {
+                "Dromai": 0.5,
+                "Kayo": 0.5,
+                "Bravo": 0.3,
+                "Dash": 0.6,
+                "Kano": 0.4,
+                "Fai": 0.4,
+                "Other": 0.6
+            }
+        },
+        "Bravo": {
+            "representation": 10,
+            "avg_skill_level": 0.1,
+            "spread": {
+                "Dromai": 0.7,
+                "Kayo": 0.5,
+                "Bravo": 0.5,
+                "Dash": 0.4,
+                "Kano": 0.4,
+                "Fai": 0.4,
+                "Other": 0.6
+            }
+        },
+        "Dash": {
+            "representation": 5,
+            "avg_skill_level": 0,
+            "spread": {
+                "Dromai": 0.5,
+                "Kayo": 0.5,
+                "Bravo": 0.6,
+                "Dash": 0.5,
+                "Kano": 0.4,
+                "Fai": 0.4,
+                "Other": 0.4
+            }
+        },
+        "Kano": {
+            "representation": 5,
+            "avg_skill_level": 0,
+            "spread": {
+                "Dromai": 0.5,
+                "Kayo": 0.5,
+                "Bravo": 0.3,
+                "Dash": 0.6,
+                "Kano": 0.5,
+                "Fai": 0.4,
+                "Other": 0.6
+            }
+        },
+        "Fai": {
+            "representation": 10,
+            "avg_skill_level": 0,
+            "spread": {
+                "Dromai": 0.5,
+                "Kayo": 0.5,
+                "Bravo": 0.3,
+                "Dash": 0.6,
+                "Kano": 0.4,
+                "Fai": 0.5,
+                "Other": 0.6
+            }
+        }
+    },
+    "players": {
+        "skill_dif": {
+            "constructed": 0.03,
+            "limited": 0.05
+        }
+    }
+}

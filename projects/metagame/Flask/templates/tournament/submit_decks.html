@@ -1,0 +1,26 @@
+<form action="matchup_spreads" method="post">
+    <div id="deck-fields">
+        <div>
+            <label for="deck_names[]">Deck Name:</label>
+            <input type="text" name="deck_names[]" required>
+            <label for="quantities[]">Quantity:</label>
+            <input type="number" name="quantities[]" min="1" required>
+        </div>
+    </div>
+    <button type="button" onclick="addDeckField()">Add Deck</button>
+    <label for="number_of_players">Number of Players:</label>
+    <input type="number" name="number_of_players" min="1" required>
+    <label for="rounds">Rounds:</label>
+    <input type="number" name="rounds" min="1" required>
+    <label for="skill_modifier">Skill Modifier:</label>
+    <input type="number" name="skill_modifier" step="any" required>
+    <input type="submit">
+</form>
+<script>
+function addDeckField() {
+    var container = document.getElementById('deck-fields');
+    var newField = document.createElement('div');
+    newField.innerHTML = '<label for="deck_names[]">Deck Name:</label><input type="text" name="deck_names[]" required><label for="quantities[]">Quantity:</label><input type="number" name="quantities[]" min="1" required>';
+    container.appendChild(newField);
+}
+</script>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Submit Deck</title>
+</head>
+<body>
+    <form action="{{ url_for('tournament.submit_deck') }}" method="post">
+        <label for="deckName">Deck Name:</label><br>
+        <input type="text" id="deckName" name="deckName" required><br>
+        
+        <label for="matchupSpread">Matchup Spread:</label><br>
+        <input type="text" id="matchupSpread" name="matchupSpread" required><br>
+        
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
