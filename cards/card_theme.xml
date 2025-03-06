@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+  <fonts>
+    <name>22px</name>
+    <stats>16px</stats>
+    <description>13px</description>
+    <footer>12px</footer>
+  </fonts>
+  <colors>
+    <background>#1e1510</background>
+    <border>#af8641</border>
+    <text>#ffffff</text>
+  </colors>
+</theme>

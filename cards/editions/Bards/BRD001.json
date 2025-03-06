@@ -1,0 +1,10 @@
+{
+    "name": "Bravo, Showstopper",
+    "image": "https://fabtcg.com/media/3212/bravo-showstopper.width-450.png",
+    "type": "Hero - Guardian",
+    "power": null,
+    "defense": 4,
+    "description": "Action - [2 Resource]: Until end of turn, your attack action cards with cost 3 or greater gain dominate. Go again.",
+    "footer": "Welcome to Rathe"
+  }
+  

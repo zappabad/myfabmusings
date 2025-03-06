@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flesh and Blood Card Gallery</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  {% for edition in editions %}
+    <div class="edition-separator">
+      <img src="../{{ edition.icon }}" class="edition-icon">
+      <h2>{{ edition.name }}</h2>
+    </div>
+
+    <div class="cards-container">
+      {% for card in edition.cards %}
+        <div class="fab-card">
+          <div class="fab-card-header">
+            <div class="fab-card-name">{{ card.name }}</div>
+            <img class="fab-edition-icon" src="../{{ edition.icon }}">
+          </div>
+          <div class="fab-card-art" style="background-image:url('{{ card.image }}')"></div>
+          <div class="fab-card-type">{{ card.type }}</div>
+          <div class="fab-card-stats">
+            {% if card.power %}
+              <span><img src="../assets/power_icon.svg">{{ card.power }}</span>
+            {% endif %}
+            {% if card.defense %}
+              <span><img src="../assets/defense_icon.svg">{{ card.defense }}</span>
+            {% endif %}
+          </div>
+          <div class="fab-card-description">
+            {{ card.description }}
+          </div>
+          {% if card.footer %}
+            <div class="fab-card-footer">{{ card.footer }}</div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  {% endfor %}
+</body>
+</html>
